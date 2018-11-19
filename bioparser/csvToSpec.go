@@ -18,9 +18,7 @@ func LoadFile(fp string) (Specification, error) {
 
 	log.Debug("Loading file ", fp)
 
-	re := regexp.MustCompile(`.*\.csv$`)
-	isCsv := re.MatchString(fp)
-	if isCsv {
+	if strings.HasSuffix(fp, ".csv") {
 		f, err := os.Open(fp)
 		if err != nil {
 			log.Panic(err)
@@ -78,7 +76,7 @@ func ParseSpecificationCSV(r *csv.Reader) (Specification, error) {
 
 	if len(csv) <= 1 {
 		log.Error("Empty content, please check the CSV")
-		return specification, err
+		return specification, err //TODO err is nil here it this correct?
 	}
 	log.Debug("CSV lenght ", len(csv))
 
